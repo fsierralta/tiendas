@@ -21,4 +21,9 @@ class Empleado extends Model
     {
         return $this->hasMany(CargoEmpleado::class, 'id_empleado');
     }
+
+    public function empleadoUser()
+    {
+        return $this->hasMany(EmpleadoUser::class, 'id_empleado');
+    }
 }

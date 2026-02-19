@@ -31,3 +31,9 @@ require __DIR__.'/categoriasAdmin.php';
 require __DIR__.'/promotoresAdmin.php';
 
 require __DIR__.'/tecnicosAdmin.php';
+
+require __DIR__.'/formapagosAdmin.php';
+
+require __DIR__.'/tasabcvsAdmin.php';
+
+require __DIR__.'/empleadoUsersAdmin.php';

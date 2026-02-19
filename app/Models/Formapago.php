@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Formapago extends Model
 {
-    //
     protected $fillable = [
         'name',
         'descripcion',
     ];
     
+    protected $casts = [
+        'name' => 'string',
+        'descripcion' => 'string',
+    ];
 }

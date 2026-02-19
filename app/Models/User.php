@@ -117,4 +117,12 @@ class User extends Authenticatable
     {
         return $this->roles()->first();
     }
+
+    /**
+     * Obtener las asignaciones de empleado del usuario
+     */
+    public function empleadoUser()
+    {
+        return $this->hasMany(EmpleadoUser::class, 'id_user');
+    }
 }
