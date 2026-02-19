@@ -25,3 +25,9 @@ require __DIR__.'/empleadoAdmin.php';
 require __DIR__.'/cargosAdmin.php';
 
 require __DIR__.'/cargoEmpleadoAdmin.php';
+
+require __DIR__.'/categoriasAdmin.php';
+
+require __DIR__.'/promotoresAdmin.php';
+
+require __DIR__.'/tecnicosAdmin.php';

@@ -4,19 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Promotore extends Model
+class Categoria extends Model
 {
     protected $fillable = [
         'name',
-        'apellidos',
-        'email',
-        'celular',
+        'descripcion',
     ];
     
     protected $casts = [
         'name' => 'string',
-        'apellidos' => 'string',
-        'email' => 'string',
-        'celular' => 'string',
+        'descripcion' => 'string',
     ];
 }

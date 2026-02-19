@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tecnico extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+        'apellidos',
+        'email',
+        'celular',
+    ];
+    
+    protected $casts = [
+        'name' => 'string',
+        'apellidos' => 'string',
+        'email' => 'string',
+        'celular' => 'string',
+    ];
 }
