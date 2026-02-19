@@ -15,3 +15,13 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/settings.php';
+
+require __DIR__.'/tiendaAdmin.php';
+
+require __DIR__.'/localesAdmin.php';
+
+require __DIR__.'/empleadoAdmin.php';
+
+require __DIR__.'/cargosAdmin.php';
+
+require __DIR__.'/cargoEmpleadoAdmin.php';

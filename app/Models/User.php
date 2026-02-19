@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -48,5 +49,72 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Relación muchos a muchos con roles
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_users','id_user','id_role')
+            ->withTimestamps();
+    }
+
+    /**
+     * Verificar si el usuario tiene un rol específico
+     */
+    public function hasRole(string $roleName): bool
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    /**
+     * Verificar si el usuario tiene algún rol de la lista
+     */
+    public function hasAnyRole(array $roleNames): bool
+    {
+        return $this->roles()->whereIn('name', $roleNames)->exists();
+    }
+
+    /**
+     * Verificar si el usuario es administrador
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    /**
+     * Obtener todos los permisos del usuario a través de sus roles
+     */
+    public function getPermissionsAttribute(): array
+    {
+        $permissions = [];
+        
+        foreach ($this->roles as $role) {
+            if ($role->hasPermission('create')) $permissions[] = 'create';
+            if ($role->hasPermission('read')) $permissions[] = 'read';
+            if ($role->hasPermission('update')) $permissions[] = 'update';
+            if ($role->hasPermission('delete')) $permissions[] = 'delete';
+        }
+        
+        return array_unique($permissions);
+    }
+
+    /**
+     * Verificar si el usuario puede realizar una acción específica
+     */
+    public function hasPermission(string $permission): bool
+    {
+        info("roles",["roles.user"=> $this->roles()]);
+        return $this->roles()->where($permission, 'Y')->exists();
+    }
+
+    /**
+     * Obtener el rol principal del usuario
+     */
+    public function getPrimaryRole(): ?Role
+    {
+        return $this->roles()->first();
     }
 }

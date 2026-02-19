@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -15,12 +15,54 @@ import {
 import type { NavItem } from '@/types';
 import AppLogo from './app-logo';
 import { dashboard } from '@/routes';
+import tienda_cargo from '@/routes/tienda_cargo';
+import roles from '@/routes/roles';
+import users from '@/routes/users';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Admin',
+        icon: Settings,
+        items: [
+           
+
+          
+            {
+                title: 'Locales',
+                href: '/admin/locales',
+                icon: MapPin,
+            },
+            {
+                title: 'Empleados',
+                href: '/admin/empleados',
+                icon: User,
+            },
+            {
+                title: 'Cargos',
+                href: '/admin/cargos',
+                icon: Briefcase,
+            },
+            {
+                title: 'Cargo-Empleados',
+                href: '/admin/cargo-empleados',
+                icon: Users,
+            },
+            {
+                title: 'Roles',
+                href: roles.index.url(),
+                icon: LayoutGrid,
+            },
+            {
+                title: 'Usuarios',
+                href: users.index.url(),
+                icon: Users,
+            },
+        ],
     },
 ];
 

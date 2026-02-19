@@ -21,6 +21,12 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '@actions': '/resources/js/actions',
+            '@routes': '/resources/js/routes',
+        },
+    },
     esbuild: {
         jsx: 'automatic',
     },

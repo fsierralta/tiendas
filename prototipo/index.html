@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ventas - Tiendas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Ventas</h1>
+            <div class="user-info">
+                <span id="usuario-actual">Vendedor: Juan Pérez</span>
+                <button id="btn-logout">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="venta-section">
+                <h2>Registrar Venta</h2>
+                
+                <!-- Información del Cliente y Vendedor -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="vendedor">Vendedor:</label>
+                        <select id="vendedor">
+                            <option value="">Seleccione vendedor...</option>
+                            <option value="1">Juan Pérez - Vendedor</option>
+                            <option value="2">María García - Vendedora</option>
+                            <option value="3">Carlos López - Vendedor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cliente">Cliente:</label>
+                        <input type="text" id="cliente" placeholder="Nombre del cliente">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="local">Local:</label>
+                        <select id="local">
+                            <option value="1">Local Principal</option>
+                            <option value="2">Local Secundario</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Selección de Promotor (Opcional) -->
+                <div class="promotor-section">
+                    <h3>¿Participa un Promotor?</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="con-promotor"> 
+                                Incluir promotor en la venta
+                            </label>
+                        </div>
+                        <div class="form-group" id="promotor-group" style="display: none;">
+                            <label for="promotor">Promotor:</label>
+                            <select id="promotor">
+                                <option value="">Seleccione promotor...</option>
+                                <option value="1">Ana Martínez - 5% comisión</option>
+                                <option value="2">Luis Rodríguez - 7% comisión</option>
+                                <option value="3">Sofía Hernández - 6% comisión</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selección de Técnico (Opcional) -->
+                <div class="tecnico-section">
+                    <h3>¿Participa un Técnico?</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="con-tecnico"> 
+                                Incluir técnico en la venta
+                            </label>
+                        </div>
+                        <div class="form-group" id="tecnico-group" style="display: none;">
+                            <label for="tecnico">Técnico:</label>
+                            <select id="tecnico">
+                                <option value="">Seleccione técnico...</option>
+                                <option value="1">Roberto Sánchez - Técnico</option>
+                                <option value="2">Diana Castro - Técnica</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Productos -->
+                <div class="productos-section">
+                    <h3>Productos</h3>
+                    <div class="producto-busqueda">
+                        <input type="text" id="buscar-producto" placeholder="Buscar producto por nombre o código...">
+                        <button id="btn-buscar">Buscar</button>
+                    </div>
+                    
+                    <div class="productos-resultados" id="productos-resultados">
+                        <!-- Los productos buscados aparecerán aquí -->
+                    </div>
+
+                    <table class="productos-table" id="productos-table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Comisión Promotor</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productos-tbody">
+                            <!-- Los productos agregados aparecerán aquí -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Resumen de Venta -->
+                <div class="resumen-section">
+                    <h3>Resumen de Venta</h3>
+                    <div class="resumen-grid">
+                        <div class="resumen-item">
+                            <label>Subtotal:</label>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="resumen-item">
+                            <label>Total Comisiones Promotores:</label>
+                            <span id="total-comisiones">$0.00</span>
+                        </div>
+                        <div class="resumen-item total">
+                            <label>Total Venta:</label>
+                            <span id="total-venta">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formas de Pago -->
+                <div class="pago-section">
+                    <h3>Forma de Pago</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="forma-pago">Forma de Pago:</label>
+                            <select id="forma-pago">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="transferencia">Transferencia</option>
+                                <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                                <option value="punto">Punto de Venta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="monto-pagado">Monto Pagado:</label>
+                            <input type="number" id="monto-pagado" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="action-buttons">
+                    <button id="btn-limpiar" class="btn-secondary">Limpiar</button>
+                    <button id="btn-guardar-borrador" class="btn-secondary">Guardar Borrador</button>
+                    <button id="btn-finalizar-venta" class="btn-primary">Finalizar Venta</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal de Búsqueda de Productos -->
+    <div id="modal-productos" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Seleccionar Producto</h3>
+            <div class="modal-busqueda">
+                <input type="text" id="modal-buscar-producto" placeholder="Buscar producto...">
+            </div>
+            <div class="modal-lista" id="modal-lista-productos">
+                <!-- Lista de productos aparecerá aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
