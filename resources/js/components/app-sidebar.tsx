@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase, Tag, UserCheck, Wrench, CreditCard, TrendingUp, UserPlus } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase, Tag, UserCheck, Wrench, CreditCard, TrendingUp, UserPlus, MapPinHouse } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -58,6 +58,11 @@ const mainNavItems: NavItem[] = [
                 title: 'Empleado-Usuario',
                 href: '/admin/empleado-users',
                 icon: UserPlus,
+            },
+            {
+                title: 'Usuario-Locale',
+                href: '/admin/locale-users',
+                icon: MapPinHouse,
             },
             {
                 title: 'Categorías',

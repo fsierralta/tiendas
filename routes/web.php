@@ -37,3 +37,5 @@ require __DIR__.'/formapagosAdmin.php';
 require __DIR__.'/tasabcvsAdmin.php';
 
 require __DIR__.'/empleadoUsersAdmin.php';
+
+require __DIR__.'/localeUsersAdmin.php';

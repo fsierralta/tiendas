@@ -125,4 +125,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(EmpleadoUser::class, 'id_user');
     }
+
+    /**
+     * Obtener las asignaciones de locale del usuario
+     */
+    public function localeUser()
+    {
+        return $this->hasMany(LocaleUser::class, 'id_user');
+    }
 }

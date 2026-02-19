@@ -21,4 +21,9 @@ class Locale extends Model
     protected $casts = [
         'estado' => 'boolean',
     ];
+
+    public function localeUser()
+    {
+        return $this->hasMany(LocaleUser::class, 'id_locale');
+    }
 }
