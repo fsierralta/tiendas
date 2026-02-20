@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Save } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,8 +29,8 @@ export default function Create(){
         telefono: '',
         celular: '',
         email: '',
-        logo: '',
-        estado: true,
+        logo: null as File | null,
+        estado: 'Lara',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -186,14 +186,27 @@ export default function Create(){
                                 )}
                             </div>
 
-                            <div className="flex items-center space-x-2">
-                                <Checkbox
-                                    id="estado"
-                                    checked={data.estado}
-                                    onCheckedChange={(checked) => setData('estado', checked as boolean)}
-                                />
-                                <Label htmlFor="estado">Local Activo</Label>
-                            </div>
+                            <div className="space-y-2">
+                                    <Label htmlFor="estado">Estado *</Label>
+                                    <Select
+                                        value={data.estado}
+                                        onValueChange={(value: string) => setData('estado', value)}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Seleccione un estado" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Lara">Lara</SelectItem>
+                                            <SelectItem value="Caracas">Caracas</SelectItem>
+                                            <SelectItem value="Valencia">Valencia</SelectItem>
+                                            <SelectItem value="Maracaibo">Maracaibo</SelectItem>
+                                            <SelectItem value="Barquisimeto">Barquisimeto</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    {errors.estado && (
+                                        <p className="text-sm text-destructive">{errors.estado}</p>
+                                    )}
+                                </div>
 
                             <div className="flex justify-end gap-4 pt-6">
                                 <Link href="/admin/locales">

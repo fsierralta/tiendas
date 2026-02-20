@@ -89,6 +89,25 @@ return [
             'tasabcvs.edit'=>['admin'],
             'tasabcvs.update'=>['admin'],
             'tasabcvs.destroy'=>['admin'],
+            'localeEmpleados.index'=>['admin'],
+            'localeEmpleados.create'=>['admin'],
+            'localeEmpleados.store'=>['admin'],
+            'localeEmpleados.edit'=>['admin'],
+            'localeEmpleados.update'=>['admin'],
+            'localeEmpleados.destroy'=>['admin'],
+            'productos.index'=>['admin'],
+            'productos.create'=>['admin'],
+            'productos.store'=>['admin'],
+            'productos.edit'=>['admin'],
+            'productos.update'=>['admin'],
+            'productos.destroy'=>['admin'],
+            'ubicaciones.index'=>['admin'],
+            'ubicaciones.create'=>['admin'],
+            'ubicaciones.store'=>['admin'],
+            'ubicaciones.edit'=>['admin'],
+            'ubicaciones.update'=>['admin'],
+            'ubicaciones.destroy'=>['admin'],
+            
             
             
             

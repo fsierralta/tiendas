@@ -32,7 +32,7 @@ class CategoriaController extends Controller
             'name' => 'required|string|max:100',
             'descripcion' => 'nullable|string|max:100',
         ]);
-
+          info("categoria",['categoria'=>$validated]);
         Categoria::create($validated);
 
         return redirect()->route('categorias.index')

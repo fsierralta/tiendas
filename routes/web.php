@@ -39,3 +39,11 @@ require __DIR__.'/tasabcvsAdmin.php';
 require __DIR__.'/empleadoUsersAdmin.php';
 
 require __DIR__.'/localeUsersAdmin.php';
+
+require __DIR__.'/localeEmpleadosAdmin.php';
+
+require __DIR__.'/productosAdmin.php';
+
+require __DIR__.'/ubicacionesAdmin.php';
+
+require __DIR__.'/comisionesAdmin.php';

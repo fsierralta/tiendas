@@ -26,7 +26,7 @@ interface Locale {
     celular?: string;
     email?: string;
     logo?: string;
-    estado: boolean;
+    estado?: string;
     created_at: string;
     updated_at: string;
 }
@@ -174,7 +174,8 @@ export default function Index(){
                                                 </td>
                                                 <td className="p-3">
                                                     <Badge variant={locale.estado ? "default" : "secondary"}>
-                                                        {locale.estado ? 'Activo' : 'Inactivo'}
+                                                        {locale.estado }
+
                                                     </Badge>
                                                 </td>
                                                 <td className="p-3">

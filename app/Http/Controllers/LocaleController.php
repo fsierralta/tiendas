@@ -33,15 +33,15 @@ class LocaleController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:locales',
             'rif' => 'required|string|max:20|unique:locales',
             'direccion' => 'required|string|max:500',
             'ciudad' => 'required|string|max:255',
             'telefono' => 'nullable|string|max:20',
             'celular' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'email' => 'nullable|email|max:255|unique:locales,email',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'estado' => 'required|boolean',
+            'estado' => 'required|string',
         ]);
 
         // Handle logo upload and convert to URL
@@ -64,15 +64,15 @@ class LocaleController extends Controller
     public function update(Request $request, Locale $locale)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:locales,name,' . $locale->id,
             'rif' => 'required|string|max:20|unique:locales,rif,' . $locale->id,
             'direccion' => 'required|string|max:500',
             'ciudad' => 'required|string|max:255',
             'telefono' => 'nullable|string|max:20',
             'celular' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'email' => 'nullable|email|max:255|unique:locales,email,' . $locale->id ,
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'estado' => 'required|boolean',
+            'estado' => 'nullable|string|max:100',
         ]);
 
         // Handle logo upload and convert to URL
@@ -87,8 +87,11 @@ class LocaleController extends Controller
             
             $logoPath = $request->file('logo')->store('locales/logos', 'public');
             $validated['logo'] = asset('storage/' . $logoPath);
+        } else {
+            // Remove logo from validated data to preserve existing logo
+            unset($validated['logo']);
         }
-
+        info("locale",["locale"=>$validated]);
         $locale->update($validated);
 
         return redirect()->route('locales.index')

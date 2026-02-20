@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase, Tag, UserCheck, Wrench, CreditCard, TrendingUp, UserPlus, MapPinHouse } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase, Tag, UserCheck, Wrench, CreditCard, TrendingUp, UserPlus, MapPinHouse, Package, Percent } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -61,6 +61,21 @@ const mainNavItems: NavItem[] = [
                 icon: MapPinHouse,
             },
             {
+                title: 'Empleado-Locale',
+                href: '/admin/locale-empleados',
+                icon: Users,
+            },
+            {
+                title: 'Productos',
+                href: '/admin/productos',
+                icon: Package,
+            },
+            {
+                title: 'Ubicaciones',
+                href: '/admin/ubicaciones',
+                icon: MapPin,
+            },
+            {
                 title: 'Categorías',
                 href: '/admin/categorias',
                 icon: Tag,
@@ -84,6 +99,11 @@ const mainNavItems: NavItem[] = [
                 title: 'Tasas BCV',
                 href: '/admin/tasabcvs',
                 icon: TrendingUp,
+            },
+            {
+                title: 'Comisiones',
+                href: '/admin/comisiones',
+                icon: Percent,
             },
             {
                 title: 'Roles',

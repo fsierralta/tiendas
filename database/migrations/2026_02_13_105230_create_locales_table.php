@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
              $table->string('name', 200)->unique();
-            $table->string('rif', 100);
+            $table->string('rif', 100)->unique();
             $table->string('direccion', 200);
             $table->string('estado', 100)->nullable();
             $table->string('ciudad', 100)->nullable();

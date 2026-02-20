@@ -16,11 +16,10 @@ class Locale extends Model
         'celular',
         'telefono',
         'logo',
+      
     ];
     
-    protected $casts = [
-        'estado' => 'boolean',
-    ];
+    
 
     public function localeUser()
     {
