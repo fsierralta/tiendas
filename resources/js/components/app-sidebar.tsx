@@ -29,11 +29,7 @@ const mainNavItems: NavItem[] = [
         title: 'Admin',
         icon: Settings,
         items: [
-            {
-                title: 'Catalogo',
-                href: tienda_cargo.index.url(),
-                icon: LayoutGrid,
-            },
+           
             {
                 title: 'Locales',
                 href: '/admin/locales',

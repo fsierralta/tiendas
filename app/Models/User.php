@@ -98,6 +98,7 @@ class User extends Authenticatable
             if ($role->hasPermission('delete')) $permissions[] = 'delete';
         }
         
+        info("permissions",["permissions"=> $permissions]);
         return array_unique($permissions);
     }
 
@@ -106,7 +107,6 @@ class User extends Authenticatable
      */
     public function hasPermission(string $permission): bool
     {
-        info("roles",["roles.user"=> $this->roles()]);
         return $this->roles()->where($permission, 'Y')->exists();
     }
 
