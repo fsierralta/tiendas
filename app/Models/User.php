@@ -92,13 +92,13 @@ class User extends Authenticatable
         $permissions = [];
         
         foreach ($this->roles as $role) {
+            info("queda",["role"=>$role]);
             if ($role->hasPermission('create')) $permissions[] = 'create';
             if ($role->hasPermission('read')) $permissions[] = 'read';
             if ($role->hasPermission('update')) $permissions[] = 'update';
             if ($role->hasPermission('delete')) $permissions[] = 'delete';
         }
-        
-        info("permissions",["permissions"=> $permissions]);
+        info('permissions',["permisos"=>$permissions]);
         return array_unique($permissions);
     }
 
@@ -107,7 +107,8 @@ class User extends Authenticatable
      */
     public function hasPermission(string $permission): bool
     {
-        return $this->roles()->where($permission, 'Y')->exists();
+        info("permiso que tiene:".$permission,["permiso"=>$this->roles()->where($permission, true)->exists()]);
+        return $this->roles()->where($permission, true)->exists();
     }
 
     /**

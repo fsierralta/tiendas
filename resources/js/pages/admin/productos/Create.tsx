@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Save, X, DollarSign } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
+import roles from '@/routes/roles';
 
 interface Locale {
     id: number;
@@ -17,13 +18,25 @@ interface Categoria {
     name: string;
 }
 
+interface Ubicacion {
+    id: number;
+    name: string;
+    id_locales: number;
+    created_at: string;
+    updated_at: string;
+    locale: {
+        id: number;
+        name: string;
+    };
+}
+
 interface Props {
     locales: Locale[];
     categorias: Categoria[];
-    ubicaciones?: { id: number; name: string }[];
+    ubicaciones?: Ubicacion[];
 }
 
-export default function Create({ locales, categorias, ubicaciones }: Props) {
+export default function Create({ locales, categorias, ubicaciones,...roles }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         id_locale: '',
@@ -36,7 +49,17 @@ export default function Create({ locales, categorias, ubicaciones }: Props) {
         reposicion: '',
         id_ubicacion: '',
     });
+     console.log(roles)
+    // Filtrar ubicaciones basadas en el locale seleccionado
+    const filteredUbicaciones = ubicaciones?.filter(
+        ubicacion => data.id_locale && ubicacion.id_locales === parseInt(data.id_locale)
+    ) || [];
 
+    // Resetear ubicación cuando cambia el locale
+    const handleLocaleChange = (value: string) => {
+        setData('id_locale', value);
+        setData('id_ubicacion', ''); // Resetear ubicación cuando cambia el locale
+    };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         post('/admin/productos', {
@@ -95,7 +118,7 @@ export default function Create({ locales, categorias, ubicaciones }: Props) {
                                     <Label htmlFor="id_locale">Locale *</Label>
                                     <Select
                                         value={data.id_locale}
-                                        onValueChange={(value) => setData('id_locale', value)}
+                                        onValueChange={handleLocaleChange}
                                     >
                                         <SelectTrigger className={errors.id_locale ? 'border-red-500' : ''}>
                                             <SelectValue placeholder="Seleccione un locale" />
@@ -260,10 +283,10 @@ export default function Create({ locales, categorias, ubicaciones }: Props) {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="null">Sin ubicación</SelectItem>
-                                            {ubicaciones && ubicaciones.length > 0 ? (
-                                                ubicaciones.map((ubicacion) => (
+                                            {filteredUbicaciones && filteredUbicaciones.length > 0 ? (
+                                                filteredUbicaciones.map((ubicacion) => (
                                                     <SelectItem key={ubicacion.id} value={ubicacion.id.toString()}>
-                                                        {ubicacion.name}
+                                                        {ubicacion.name} -{ubicacion.locale.name}
                                                     </SelectItem>
                                                 ))
                                             ) : (

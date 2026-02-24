@@ -15,10 +15,16 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
              $table->date('fecha');
-            $table->integer('id_cliente'); // Sin FK porque no existe tabla clientes en el script
+            $table->unsignedBigInteger('id_cliente'); // Sin FK porque no existe tabla clientes en el script
             $table->unsignedBigInteger('id_promotor')->nullable();
             $table->unsignedBigInteger('id_tecnico')->nullable();
             $table->unsignedBigInteger('locale_id'); // Corregido: referencia a locales
+            $table->foreign('id_cliente')
+                  ->references('id')->on('clientes')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+
+            
              $table->foreign('locale_id')
                   ->references('id')->on('locales')
                   ->onDelete('cascade')

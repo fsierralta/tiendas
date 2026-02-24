@@ -15,7 +15,7 @@ class Role extends Model
         'read',
         'delete',
     ];
-
+ 
     protected $casts = [
         'update' => 'boolean',
         'create' => 'boolean',

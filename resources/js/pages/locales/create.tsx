@@ -111,13 +111,14 @@ export default function Create(){
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="email">Correo Electrónico</Label>
+                                    <Label htmlFor="email">Correo Electrónico*</Label>
                                     <Input
                                         id="email"
                                         type="email"
                                         value={data.email}
                                         onChange={(e) => setData('email', e.target.value)}
                                         placeholder="Ej: tienda@ejemplo.com"
+                                        required
                                     />
                                     {errors.email && (
                                         <p className="text-sm text-destructive">{errors.email}</p>

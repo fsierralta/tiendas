@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class CheckPermission
 {
@@ -15,7 +16,7 @@ class CheckPermission
      * @param  \Closure  $next
      * @return  mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next,$permission)
     {
         $user = Auth::user();
         
@@ -23,21 +24,19 @@ class CheckPermission
             return $next($request);
         }
 
-        // Obtener el permiso requerido desde la ruta
-        $route = $request->route();
-        info('permiso',["route"=>$route]);
-       // 'accion'=>$route->getAction('permission')]);    
-
-        $permission = $route->getAction('permission') ?? 'read';
-        info("permission",["permission"=>$permission]);
-
+              
 
         // Verificar si el usuario tiene el permiso requerido
         if (!$user->hasPermission($permission)) {
-            return redirect()->route('dashboard')
-                ->with('error', 'No tienes los permisos necesarios para realizar esta acción.');
-        }
+         return   Inertia::render('error/errorPage',[
+                'status'=>403,
+                'message'=> "No tienes los permisos necesarios para realizar esta acción:{$permission}",
+                'auth'=>Auth::user()
 
+        ]);
+           // abort(403,"No tienes los permisos necesarios para realizar esta acción:{$permission}");
+        }
+       
         return $next($request);
     }
 }

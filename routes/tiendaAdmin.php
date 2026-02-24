@@ -86,36 +86,7 @@ Route::prefix("admin")->group(function () {
         ->middleware('auth','verified','check.permission:delete','checkRole:admin'   );
 
    
-        // ----Rutas de Cargos*******************************
-    Route::get('/tienda-cargo', [CargoController::class, 'index'])
-        ->name('tienda_cargo.index')
-        ->middleware('auth','verified','check.permission:read',
-    'checkRole:admin');
-  
-
-    Route::get('/tienda-cargo/create', [CargoController::class, 'create'])
-        ->name('tienda_cargo.create')
-        ->middleware('auth','verified','check.permission:read','checkRole:admin');
-
-    Route::post('/tienda-cargo', [CargoController::class, 'store'])
-        ->name('tienda_cargo.store')    
-        ->middleware('auth','verified','check.permission:create','checkRole:admin');
-      
-
-    Route::get('/tienda-cargo/{cargo}/edit', [CargoController::class, 'show'])
-        ->name('tienda_cargo.show')
-        ->middleware('auth','verified','check.permission:read','checkRole:admin');
-      
-
-    Route::patch('/tienda-cargo/{id}', [CargoController::class, 'update'])
-        ->name('tienda_cargo.update')           
-        ->middleware('auth','verified','check.permission:update','checkRole:admin');
-      
-
-        Route::delete('/tienda-cargo/{id}', [CargoController::class, 'destroy'])
-        ->name('tienda_cargo.destroy')
-        ->middleware('auth','verified','check.permission:delete','checkRole:admin');
-    
+        
 });
 
 

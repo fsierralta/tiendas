@@ -39,7 +39,7 @@ class LocaleController extends Controller
             'ciudad' => 'required|string|max:255',
             'telefono' => 'nullable|string|max:20',
             'celular' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255|unique:locales,email',
+            'email' => 'required|email|max:255|unique:locales,email',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'estado' => 'required|string',
         ]);
@@ -70,7 +70,7 @@ class LocaleController extends Controller
             'ciudad' => 'required|string|max:255',
             'telefono' => 'nullable|string|max:20',
             'celular' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255|unique:locales,email,' . $locale->id ,
+            'email' => 'required|email|max:255|unique:locales,email,' . $locale->id ,
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'estado' => 'nullable|string|max:100',
         ]);

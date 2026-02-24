@@ -11,7 +11,7 @@ import { store } from "@actions/App/Http/Controllers/CargoController";
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Catalogo',
-        href: "/admin/tienda-cargo",
+        href: "/admin/cargos",
     },
     {
         title: 'Nuevo Cargo',
@@ -47,7 +47,7 @@ export default function Create() {
                             Crea un nuevo cargo para el sistema
                         </p>
                     </div>
-                    <Link href="/admin/tienda-cargo">
+                    <Link href="/admin/cargos">
                         <Button variant="outline">
                             <ArrowLeft className="w-4 h-4 mr-2" />
                             Volver
@@ -99,7 +99,7 @@ export default function Create() {
                             </div>
 
                             <div className="flex justify-end gap-3 pt-4">
-                                <Link href="/admin/tienda-cargo">
+                                <Link href="/admin/cargos">
                                     <Button variant="outline" type="button">
                                         Cancelar
                                     </Button>

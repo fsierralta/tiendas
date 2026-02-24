@@ -27,7 +27,11 @@ class CheckRole
 
         // Verificar si la ruta actual requiere verificación de rol
         $currentRoute = $request->route()->getName();
-        info('currentroute',['route'=>$currentRoute]);
+        $accionRoute=$request->route()->getAction('admin');
+
+
+        info('currentroute',['route'=>$currentRoute,
+                              'accion'=>$accionRoute  ]);
        
 
         // Definir qué roles se requieren para cada ruta

@@ -8,13 +8,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Search, Plus, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import tienda_cargo from '@/routes/tienda_cargo';
+import cargos from '@/routes/cargos';
 
 
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Catalogo',
+        title: 'Cargos',
         href: "#",
     },
 ];
@@ -42,13 +42,13 @@ export default function Index(){
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        router.get(tienda_cargo.index.url(), { search }, { preserveState: true });
+        router.get(cargos.index.url(), { search }, { preserveState: true });
     };
 
     const handleDelete = (id: number) => {
         if (confirm(`¿Estás seguro de eliminar este cargo?${id}`)) {
             try {
-               router.delete(tienda_cargo.destroy.url({ id }));
+               router.delete(`/admin/cargos/${id}`);
 
             } catch (error) {
             }
@@ -66,7 +66,7 @@ export default function Index(){
                         </p>
                     </div>
 
-                    <Link href={tienda_cargo.create.url()}>
+                    <Link href={'/admin/cargos/create'}>
 
                         <Button>
                             <Plus className="w-4 h-4 mr-2" />
@@ -119,7 +119,7 @@ export default function Index(){
                                                 </td>
                                                 <td className="p-3">
                                                     <div className="flex gap-2">
-                                                        <Link href={tienda_cargo.show.url({ cargo: cargo.id })}>
+                                                        <Link href={`/admin/cargos/${cargo.id}/edit`}>
                                                             <Button variant="outline" size="sm">
                                                                 <Edit className="w-4 h-4" />
                                                             </Button>

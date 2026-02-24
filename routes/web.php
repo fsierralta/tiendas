@@ -47,3 +47,6 @@ require __DIR__.'/productosAdmin.php';
 require __DIR__.'/ubicacionesAdmin.php';
 
 require __DIR__.'/comisionesAdmin.php';
+
+require __DIR__.'/clientesAdmin.php';   
+

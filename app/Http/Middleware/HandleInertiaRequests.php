@@ -40,7 +40,9 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
-            ],
+                "permissions"=>$request->user() ? $request->user()->permissions : [],
+                 "role_user"=>$request->user() ? $request->user()->roles:[], 
+                ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash'=>[
                 "success"=>$request->session()->get('success'),
@@ -49,8 +51,8 @@ class HandleInertiaRequests extends Middleware
                 "info"=>$request->session()->get('info'),
 
             ],
-          // "role_user"=>$request->user()->role,
-           "permissions"=>$request->user() ? $request->user()->permissions : [],
+         
+           
         ];
     }
 }
