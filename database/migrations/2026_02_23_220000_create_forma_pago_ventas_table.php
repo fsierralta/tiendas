@@ -11,29 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('forma_pago_ventas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('venta_cabezera_id');
-            $table->unsignedBigInteger('id_producto');
-            $table->integer('cantidad');
-            $table->decimal('precio_unitario', 10, 2);
-            $table->decimal('subtotal', 10, 2);
-            $table->string('descripcion', 200)->nullable();
-
-            $table->foreign('id_producto')
-                  ->references('id')->on('productos')
-                  ->onDelete('cascade');
+            $table->unsignedBigInteger('forma_pago_id');
+            $table->decimal('monto', 10, 2);
+            $table->string('referencia', 100)->nullable();
+            $table->text('notas')->nullable();
 
             $table->foreign('venta_cabezera_id')
                   ->references('id')->on('venta_cabezeras')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
-            $table->index('id_producto');
-            $table->index('venta_cabezera_id');
+            $table->foreign('forma_pago_id')
+                  ->references('id')->on('formapagos')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
 
-            
+            $table->index('venta_cabezera_id');
+            $table->index('forma_pago_id');
         });
     }
 
@@ -42,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('forma_pago_ventas');
     }
 };

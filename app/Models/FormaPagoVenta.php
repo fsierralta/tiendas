@@ -4,27 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class VentaFooter extends Model
+class FormaPagoVenta extends Model
 {
     protected $fillable = [
-        'iva',
-        'descuento',
-        'total',
-        'subtotal',
         'venta_cabezera_id',
+        'forma_pago_id',
+        'monto',
+        'referencia',
+        'notas',
     ];
 
     protected $casts = [
-        'iva' => 'decimal:2',
-        'descuento' => 'decimal:2',
-        'total' => 'decimal:2',
-        'subtotal' => 'decimal:2',
+        'monto' => 'decimal:2',
     ];
 
     public function ventaCabezera(): BelongsTo
     {
         return $this->belongsTo(VentaCabezera::class, 'venta_cabezera_id');
+    }
+
+    public function formaPago(): BelongsTo
+    {
+        return $this->belongsTo(Formapago::class, 'forma_pago_id');
     }
 }

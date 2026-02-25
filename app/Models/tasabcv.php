@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tasabcv extends Model
+class Tasabcv extends Model
 {
     protected $fillable = [
         'fecha',
@@ -15,4 +15,9 @@ class tasabcv extends Model
         'fecha' => 'date',
         'monto' => 'decimal:2',
     ];
+
+    public function facturaVentas()
+    {
+        return $this->hasMany(FacturaVenta::class, 'id_tasabcv');
+    }
 }

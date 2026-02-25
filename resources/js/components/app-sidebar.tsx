@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase, Tag, UserCheck, Wrench, CreditCard, TrendingUp, UserPlus, MapPinHouse, Package, Percent } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Settings, Users, MapPin, User, Briefcase, Tag, UserCheck, Wrench, CreditCard, TrendingUp, UserPlus, MapPinHouse, Package, Percent, DollarSign } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -111,13 +111,18 @@ const mainNavItems: NavItem[] = [
                 icon: Percent,
             },
             {
+                title: 'Ventas',
+                href: '/ventas',
+                icon: DollarSign,
+            },
+            {
                 title: 'Roles',
-                href: roles.index.url(),
+                href: '/admin/roles',
                 icon: LayoutGrid,
             },
             {
                 title: 'Usuarios',
-                href: users.index.url(),
+                href: '/admin/users',
                 icon: Users,
             },
         ],
@@ -128,8 +133,13 @@ const mainNavItems: NavItem[] = [
         items:[
             {
                 title: 'Ventas',
-                href: '#',
-                icon: Users,
+                href: '/ventas',
+                icon: DollarSign,
+            },
+            {
+                title: 'Nueva Venta',
+                href: '/ventas/create',
+                icon: DollarSign,
             }
         ]
     },

@@ -15,7 +15,7 @@ class CheckRole
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next,$accion)
     {
         $user = Auth::user();
        
@@ -27,12 +27,12 @@ class CheckRole
 
         // Verificar si la ruta actual requiere verificación de rol
         $currentRoute = $request->route()->getName();
-        $accionRoute=$request->route()->getAction('admin');
+        $accionRoute=$accion;
 
 
         info('currentroute',['route'=>$currentRoute,
-                              'accion'=>$accionRoute  ]);
-       
+                            "accion:"=>$accionRoute]  )  ;  
+    
 
         // Definir qué roles se requieren para cada ruta
         $routeRoles = config('routeRoles');

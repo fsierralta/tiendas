@@ -107,6 +107,14 @@ return [
             'ubicaciones.edit'=>['admin'],
             'ubicaciones.update'=>['admin'],
             'ubicaciones.destroy'=>['admin'],
+            'clientes.index'=>['admin'],
+            'clientes.create'=>['admin'],
+            'clientes.destroy'=>['admin'],
+            'clientes.update'=>['admin'],
+            'clientes.store'=>['admin'],
+            'clientes.edit'=>['admin']
+
+
             
             
             

@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application IVA
+    |--------------------------------------------------------------------------
+    |
+    | This value is the IVA (tax rate) used for calculations in the application.
+    | Default is 16% but can be configured via environment variable.
+    |
+    */
+
+    'iva' => env('VITE_APP_IVA', 16),
+
 ];

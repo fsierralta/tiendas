@@ -18,6 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_cliente'); // Sin FK porque no existe tabla clientes en el script
             $table->unsignedBigInteger('id_promotor')->nullable();
             $table->unsignedBigInteger('id_tecnico')->nullable();
+            $table->decimal('monto_promotor', 10, 2)->nullable();
+            $table->unsignedBigInteger('user_id'); // Usuario que realiza la venta
+            $table->decimal('monto_total', 10, 2); // Total general de la venta
             $table->unsignedBigInteger('locale_id'); // Corregido: referencia a locales
             $table->foreign('id_cliente')
                   ->references('id')->on('clientes')
@@ -39,10 +42,16 @@ return new class extends Migration
                   ->references('id')->on('tecnicos')
                   ->onDelete('set null');
 
+            $table->foreign('user_id')
+                  ->references('id')->on('users')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
+
             $table->index('locale_id');
             $table->index('id_promotor');
             $table->index('id_tecnico');
             $table->index('id_cliente');
+            $table->index('user_id');
             
 
         });

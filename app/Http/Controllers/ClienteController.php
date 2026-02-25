@@ -28,8 +28,38 @@ class ClienteController extends Controller
         return Inertia::render('clientes/create');
     }
 
+    /**
+     * Buscar clientes en tiempo real
+     */
+    public function buscar(Request $request): JsonResponse
+    {
+        $query = Cliente::query();
+
+        // Filtro por nombre
+        if ($request->filled('nombre')) {
+            $query->where('name', 'like', '%' . $request->nombre . '%');
+        }
+
+        // Filtro por apellido
+        if ($request->filled('apellido')) {
+            $query->where('apellido', 'like', '%' . $request->apellido . '%');
+        }
+
+        // Filtro por cédula/RIF
+        if ($request->filled('cedula_rif')) {
+            $query->where('cedula_rif', 'like', '%' . $request->cedula_rif . '%');
+        }
+
+        // Limitar resultados para mejor performance
+        $clientes = $query->limit(50)->get();
+
+        return response()->json($clientes);
+    }
+
     public function store(Request $request)
     {
+         info("validated",["validated: cliente"=>$request]);
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -40,11 +70,31 @@ class ClienteController extends Controller
             'cedula_rif' => 'required|string|max:20|unique:clientes,cedula_rif',
             'tipo' => 'required|string|max:1',
         ]);
+       
 
-        Cliente::create($validated);
+         try{    
 
+        $cliente = Cliente::create($validated);
+
+        // Si es una petición AJAX, devolver JSON
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'cliente' => $cliente,
+                'message' => 'Cliente creado exitosamente'
+            ]);
+        }
+
+        // Si es una petición normal, redireccionar
         return redirect()->route('clientes.index')
             ->with('success', 'Cliente creado exitosamente.');
+    }
+    catch (\Exception $e) {
+        info("error create cliente",["error:"=>$e->getMessage()] );
+        return redirect()->route('clientes.index')
+            ->with('error', 'Error al crear el cliente: ' . $e->getMessage());
+    }  
+
     }
 
     public function edit(Cliente $cliente)

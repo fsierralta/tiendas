@@ -58,11 +58,26 @@ export default function Index(){
     };
 
     const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleDateString('es-VE', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+        try {
+            // Intentar parsear la fecha como UTC y mostrar en hora local
+            const date = new Date(dateString);
+            
+            // Verificar si la fecha es válida
+            if (isNaN(date.getTime())) {
+                return 'Fecha inválida';
+            }
+            
+            // Usar UTC para evitar desface y luego mostrar en formato local
+            return date.toLocaleDateString('es-VE', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'UTC' // Especificar UTC para consistencia
+            });
+        } catch (error) {
+            console.error('Error al formatear fecha:', error);
+            return dateString; // Retornar el original si hay error
+        }
     };
 
     return (
