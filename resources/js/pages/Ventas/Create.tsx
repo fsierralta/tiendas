@@ -6,6 +6,7 @@ import { ArrowLeft, Save } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import { useState, useEffect } from 'react';
 import { router } from '@inertiajs/react';
+import { showSuccessToast, showErrorToast } from '@/utils/toast';
 
 // Importar nuevos componentes
 import ClienteSelector from '@/components/ventas/ClienteSelector';
@@ -229,6 +230,22 @@ export default function Create({ productos, formasPago, clientes, promotores, te
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         
+        // Validación básica
+        if (!data.id_cliente) {
+            showErrorToast('Debes seleccionar un cliente');
+            return;
+        }
+        
+        if (ventaItems.length === 0) {
+            showErrorToast('Debes agregar al menos un producto');
+            return;
+        }
+        
+        if (formasPagoItems.length === 0) {
+            showErrorToast('Debes agregar al menos una forma de pago');
+            return;
+        }
+        
         const formData = {
             id_cliente: data.id_cliente,
             id_promotor: data.id_promotor,
@@ -238,7 +255,18 @@ export default function Create({ productos, formasPago, clientes, promotores, te
             formas_pago: formasPagoItems
         };
 
-        router.post('/ventas', formData as any);
+        // Mostrar toast de carga
+        showSuccessToast('Procesando venta...');
+        
+        router.post('/ventas', formData as any, {
+            onSuccess: () => {
+                // El mensaje flash del backend se mostrará automáticamente
+                showSuccessToast('¡Venta creada exitosamente!');
+            },
+            onError: (errors) => {
+                showErrorToast('Error al crear la venta');
+            }
+        });
     };
 
     return (

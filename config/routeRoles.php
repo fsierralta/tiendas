@@ -112,7 +112,13 @@ return [
             'clientes.destroy'=>['admin'],
             'clientes.update'=>['admin'],
             'clientes.store'=>['admin'],
-            'clientes.edit'=>['admin']
+            'clientes.edit'=>['admin'],
+            'ventas.index'=>['admin'],
+            'ventas.create'=>['admin'],
+            'ventas.store'=>['admin'],
+            'ventas.show'=>['admin'],
+            'ventas.destroy'=>['admin'],
+            
 
 
             

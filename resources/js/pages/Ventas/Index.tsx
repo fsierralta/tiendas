@@ -4,10 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Search, Eye, Calendar, DollarSign } from 'lucide-react';
+import { Plus, Search, Eye, Calendar, DollarSign, Trash2 } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
+import { showSuccessToast, showErrorToast } from '@/utils/toast';
 
 interface VentaCabezera {
     id: number;
@@ -54,7 +55,7 @@ const breadcrumbs = [
 ];
 
 export default function Index({ ventas }: { ventas: PaginatedVentas }) {
-    const { url } = usePage();
+    const { url,flash } = usePage();
     const [search, setSearch] = useState('');
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
@@ -69,6 +70,20 @@ export default function Index({ ventas }: { ventas: PaginatedVentas }) {
             preserveState: true,
             preserveScroll: true,
         });
+    };
+
+    const handleDelete = (id: number, clienteName: string) => {
+        if (confirm(`¿Estás seguro de eliminar la venta del cliente "${clienteName}"?`)) {
+            router.delete(`/ventas/${id}`, {
+                onSuccess: (page) => {
+                    const successMessage = (page.props.flash as any)?.success || 'Venta eliminada exitosamente';
+                    showSuccessToast(successMessage);
+                },
+                onError: (errors) => {
+                    showErrorToast('Error al eliminar la venta');
+                }
+            });
+        }
     };
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -247,6 +262,14 @@ export default function Index({ ventas }: { ventas: PaginatedVentas }) {
                                                                     <Eye className="w-4 h-4" />
                                                                 </Button>
                                                             </Link>
+                                                            <Button 
+                                                                variant="outline" 
+                                                                size="sm"
+                                                                onClick={() => handleDelete(venta.id, venta.cliente.name)}
+                                                                className="text-destructive hover:text-destructive"
+                                                            >
+                                                                <Trash2 className="w-4 h-4" />
+                                                            </Button>
                                                         </div>
                                                     </TableCell>
                                                 </TableRow>

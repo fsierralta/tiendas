@@ -12,6 +12,7 @@ use App\Services\VentaService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -341,5 +342,72 @@ class VentaController extends Controller
             'total' => $total,
             'detalles' => $detalles,
         ]);
+    }
+
+    /**
+     * Eliminar una venta
+     */
+    public function destroy($id)
+    {
+     
+
+        try {
+            $venta=VentaCabezera::findOrFail($id);
+            info("venta",["ventacabezera"=>$venta]);
+            // Verificar que el usuario tenga acceso a esta venta
+            if ($venta->user_id !== auth()->id()) {
+                abort(403, 'No tienes permiso para eliminar esta venta');
+            }
+
+            // Usar una transacción para asegurar la integridad de los datos
+            DB::transaction(function () use ($venta) {
+                // Restaurar stock de productos
+                foreach ($venta->ventas as $ventaDetalle) {
+                    $producto = $ventaDetalle->producto;
+                    if ($producto) {
+                        $producto->increment('cantidad', $ventaDetalle->cantidad);
+                    }
+                }
+
+                // Eliminar registros relacionados en orden correcto
+                // 1. Formas de pago
+                $venta->formaPagos()->delete();
+                
+                // 2. Footer de venta
+                $venta->ventaFooter()->delete();
+                
+                // 3. Detalles de venta (con restauración de stock)
+                $venta->ventas()->delete();
+                
+                // 4. Comisiones de promotor y técnico
+                \App\Models\VentaPromotore::where('id_factura_venta', function($query) use ($venta) {
+                    $query->select('id')->from('factura_ventas')->where('id_venta_cabezera', $venta->id);
+                })->delete();
+                
+                \App\Models\VentaTecnico::where('id_factura_venta', function($query) use ($venta) {
+                    $query->select('id')->from('factura_ventas')->where('id_venta_cabezera', $venta->id);
+                })->delete();
+                
+                // 5. Factura
+                \App\Models\FacturaVenta::where('id_venta_cabezera', $venta->id)->delete();
+                
+                // 6. Finalmente eliminar la cabezera
+                $venta->delete();
+            });
+
+            return redirect()->route('ventas.index')
+                ->with('success', 'Venta eliminada exitosamente 02');
+
+        } catch (\Exception $e) {
+            info('Error al eliminar venta', [
+                'venta_id' => $venta->id,
+                'error' => $e->getMessage(),
+                'linea' => $e->getLine(),
+                'archivo' => $e->getFile()
+            ]);
+
+            return redirect()->route('ventas.index')
+                ->with('error', 'Error al eliminar la venta: ' . $e->getMessage());
+        }
     }
 }

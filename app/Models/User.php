@@ -107,7 +107,7 @@ class User extends Authenticatable
      */
     public function hasPermission(string $permission): bool
     {
-        info("permiso que tiene:".$permission,["permiso"=>$this->roles()->where($permission, true)->exists()]);
+      //  info("permiso que tiene:".$permission,["permiso"=>$this->roles()->where($permission, true)->exists()]);
         return $this->roles()->where($permission, true)->exists();
     }
 

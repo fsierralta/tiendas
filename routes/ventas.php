@@ -25,6 +25,10 @@ Route::prefix('ventas')->group(function () {
         ->name('ventas.show')
         ->middleware('auth', 'verified', 'check.permission:read', 'checkRole:admin');
     
+     Route::delete('/{id}',[VentaController::class,"destroy"])
+     ->name('ventas.destroy')
+     ->middleware('auth', 'verified', 'check.permission:delete', 'checkRole:admin');  
+
     // API endpoints para el proceso de ventas
     Route::prefix('api')->group(function () {
         // Buscar clientes en tiempo real
@@ -56,5 +60,6 @@ Route::prefix('ventas')->group(function () {
         Route::post('/calcular-totales', [VentaController::class, 'calcularTotales'])
             ->name('api.ventas.calcular-totales')
             ->middleware('auth', 'verified', 'check.permission:read', 'checkRole:admin');
+      
     });
 });
