@@ -45,7 +45,7 @@ class VentaService
                 
                 // Validar stock disponible
                 $this->validarStock($producto, $productoData['cantidad']);
-                info("data venta",["data"=>$productoData]);
+                info("data venta",["data"=>$productoData]);//se verifica los  campos enviados
                 
                 // Determinar el precio unitario y monto promotor según el escenario
                 $precioUnitario = $producto->precio;
@@ -247,7 +247,7 @@ class VentaService
             // Crear nueva factura
             $factura = \App\Models\FacturaVenta::create([
                 'id_venta_cabezera' => $ventaCabezeraId,
-                'id_locale' => 1, // Asumimos locale 1, puedes ajustar según necesites
+                'id_locale' => $this->obtenerLocaleUsuario(), // Asumimos locale 1, puedes ajustar según necesites
                 'nrofactura' => 'FAC-' . date('Y-m-d') . '-' . str_pad($ventaCabezeraId, 6, '0', STR_PAD_LEFT),
                 'id_tasabcv' => $tasaHoy ? $tasaHoy->id : null,
             ]);

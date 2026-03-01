@@ -118,6 +118,21 @@ return [
             'ventas.store'=>['admin'],
             'ventas.show'=>['admin'],
             'ventas.destroy'=>['admin'],
+            'comisiones.index'=>['admin'],
+            'comisiones.create'=>['admin'],
+            'comisiones.store'=>['admin'],
+            'comisiones.edit'=>['admin'],
+            'comisiones.update'=>['admin'],
+            'comisiones.destroy'=>['admin'],
+            'api.ventas.buscar-clientes'=>['admin'],
+            'api.ventas.crear-cliente'=>['admin'],
+            'api.ventas.buscar-productos'=>['admin'],
+            'api.ventas.productos'=>['admin'],
+            'api.ventas.validar-stock'=>['admin'],
+            'api.ventas.calcular-totales'=>['admin'],   
+
+
+
             
 
 

@@ -89,6 +89,15 @@ class VentaController extends Controller
      */
     public function index(Request $request)
     {
+        
+         if(!$request->has('fecha_inicio')){
+            $request->merge([
+                'fecha_inicio'=>now()->toDateString(),
+                'fecha_fin'=>now()->toDateString()
+            ]);
+         }
+        
+
         $ventas = VentaCabezera::where('user_id', auth()->id())
             ->with(['cliente', 'ventas.producto', 'ventaFooter', 'promotor', 'tecnico'])
             ->when($request->search, function ($query, $search) {
@@ -98,7 +107,7 @@ class VentaController extends Controller
                 });
             })
             ->when($request->fecha_inicio, function ($query, $fecha) {
-                $query->where('fecha', '>=', $fecha);
+                $query->where('fecha', '>=', $fecha );
             })
             ->when($request->fecha_fin, function ($query, $fecha) {
                 $query->where('fecha', '<=', $fecha);
