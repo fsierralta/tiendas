@@ -186,7 +186,7 @@ class VentaController extends Controller
      */
     public function crearCliente(Request $request): JsonResponse
     {
-     //  info("API",["APIDATA"=>$request]);
+      info("API",["APIDATA"=>$request]);
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',

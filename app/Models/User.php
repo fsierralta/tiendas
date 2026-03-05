@@ -68,11 +68,14 @@ class User extends Authenticatable
         return $this->roles()->where('name', $roleName)->exists();
     }
 
+  
+
     /**
      * Verificar si el usuario tiene algún rol de la lista
      */
-    public function hasAnyRole(array $roleNames): bool
+    public function hasAnyRole($roleNames): bool
     {
+       info("recibe  esto roles ",['roles'=>$roleNames]);     
         return $this->roles()->whereIn('name', $roleNames)->exists();
     }
 

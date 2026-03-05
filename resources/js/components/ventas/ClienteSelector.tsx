@@ -19,6 +19,7 @@ interface ClienteSelectorProps {
     clientes: Cliente[];
     selectedCliente: string;
     onClienteChange: (value: string) => void;
+    onClientesUpdate?: (clientes: Cliente[]) => void;
     error?: string;
 }
 
@@ -37,6 +38,7 @@ export default function ClienteSelector({
     clientes, 
     selectedCliente, 
     onClienteChange, 
+    onClientesUpdate,
     error 
 }: ClienteSelectorProps) {
     const [busquedaNombre, setBusquedaNombre] = useState('');
@@ -86,6 +88,12 @@ export default function ClienteSelector({
     const handleClienteCreado = (nuevoCliente: Cliente) => {
         // Agregar el nuevo cliente a la lista
         const clientesActualizados = [...clientes, nuevoCliente];
+        
+        // Actualizar la lista en el componente padre si se proporcionó la función
+        if (onClientesUpdate) {
+            onClientesUpdate(clientesActualizados);
+        }
+        
         // Seleccionar automáticamente el nuevo cliente
         onClienteChange(nuevoCliente.id.toString());
         

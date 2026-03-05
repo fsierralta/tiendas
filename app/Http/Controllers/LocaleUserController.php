@@ -35,7 +35,7 @@ class LocaleUserController extends Controller
     public function create()
     {
         $users = User::whereDoesntHave('localeUser')->get();
-        $locales = Locale::whereDoesntHave('localeUser')->get();
+        $locales = Locale::get();
 
         return Inertia::render('localeUsers/create', [
             'users' => $users,
@@ -47,7 +47,7 @@ class LocaleUserController extends Controller
     {
         $validated = $request->validate([
             'id_user' => 'required|exists:users,id|unique:locale_users,id_user',
-            'id_locale' => 'required|exists:locales,id|unique:locale_users,id_locale',
+            'id_locale' => 'required|exists:locales,id'//|unique:locale_users,id_locale',
         ]);
 
         // Check if assignment already exists

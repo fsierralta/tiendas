@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { X, UserPlus } from 'lucide-react';
-import axios from "axios"
+import axios from 'axios';
 import { router } from '@inertiajs/react';
 
 interface Cliente {
@@ -45,27 +45,29 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
             apellido: '',
             cedula_rif: '',
             email: '',
-            telefono: ''
+            telefono: '',
+            ciudad: '',
+            direccion: '',
+            tipo: ''
         });
         setErrors({});
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+        console.log('🔍 handleSubmit iniciado');
+        console.log('📋 formData:', formData);
+        
         setLoading(true);
         setErrors({});
 
         try {
-            const response = await axios.post('/ventas/api/crear-cliente', formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
-                }
-              
-            });
+            console.log('🚀 Enviando petición con axios...');
+            console.log('📋 Datos a enviar:', formData);
+            
+            const response = await axios.post('/ventas/api/crear-cliente', formData);
 
-            const result = await response.data;
+            console.log('✅ Respuesta recibida:', response.data);
+            const result = response.data;
 
             if (result.success) {
                 onClienteCreado(result.cliente);
@@ -74,9 +76,24 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
             } else {
                 setErrors(result.errors || {});
             }
-        } catch (error) {
-            console.error('Error al crear cliente:', error);
-            setErrors({ general: 'Error al crear el cliente' });
+        } catch (error: any) {
+            console.error('❌ Error al crear cliente:', error);
+            
+            if (error.response) {
+                const { status, data } = error.response;
+                
+                if (status === 422 && data.errors) {
+                    setErrors(data.errors);
+                } else {
+                    setErrors({ 
+                        general: data.message || `Error del servidor (${status})` 
+                    });
+                }
+            } else if (error.request) {
+                setErrors({ general: 'Error de conexión. Verifica tu internet.' });
+            } else {
+                setErrors({ general: 'Error inesperado al crear el cliente' });
+            }
         } finally {
             setLoading(false);
         }
@@ -111,7 +128,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                         </Button>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="space-y-4" onSubmit={handleSubmit}>
                             {/* Mensaje de error general */}
                             {errors.general && (
                                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
@@ -124,6 +141,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                     <Label htmlFor="name">Nombre *</Label>
                                     <Input
                                         id="name"
+                                        name="name"
                                         type="text"
                                         value={formData.name}
                                         onChange={(e) => handleInputChange('name', e.target.value)}
@@ -140,6 +158,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                     <Label htmlFor="apellido">Apellido *</Label>
                                     <Input
                                         id="apellido"
+                                        name="apellido"
                                         type="text"
                                         value={formData.apellido}
                                         onChange={(e) => handleInputChange('apellido', e.target.value)}
@@ -157,6 +176,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                 <Label htmlFor="cedula_rif">Cédula/RIF *</Label>
                                 <Input
                                     id="cedula_rif"
+                                    name="cedula_rif"
                                     type="text"
                                     value={formData.cedula_rif}
                                     onChange={(e) => handleInputChange('cedula_rif', e.target.value)}
@@ -166,13 +186,14 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                 />
                                 {errors.cedula_rif && (
                                     <p className="text-sm text-red-500">{errors.cedula_rif}</p>
-                                    )}
+                                )}
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="tipo">Tipo *</Label>
                                 <Input
                                     id="tipo"
+                                    name="tipo"
                                     type="text"
                                     value={formData.tipo}
                                     onChange={(e) => handleInputChange('tipo', e.target.value)}
@@ -183,7 +204,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                 />
                                 {errors.tipo && (
                                     <p className="text-sm text-red-500">{errors.tipo}</p>
-                                    )}
+                                )}
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -191,6 +212,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                     <Label htmlFor="email">Email</Label>
                                     <Input
                                         id="email"
+                                        name="email"
                                         type="email"
                                         value={formData.email}
                                         onChange={(e) => handleInputChange('email', e.target.value)}
@@ -207,6 +229,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                     <Label htmlFor="telefono">Teléfono</Label>
                                     <Input
                                         id="telefono"
+                                        name="telefono"
                                         type="tel"
                                         value={formData.telefono}
                                         onChange={(e) => handleInputChange('telefono', e.target.value)}
@@ -224,6 +247,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                 <Label htmlFor="ciudad">Ciudad</Label>
                                 <Input
                                     id="ciudad"
+                                    name="ciudad"
                                     type="text"
                                     value={formData.ciudad}
                                     onChange={(e) => handleInputChange('ciudad', e.target.value)}
@@ -240,6 +264,7 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                 <Label htmlFor="direccion">Dirección</Label>
                                 <Input
                                     id="direccion"
+                                    name="direccion"
                                     type="text"
                                     value={formData.direccion}
                                     onChange={(e) => handleInputChange('direccion', e.target.value)}
@@ -262,13 +287,14 @@ export default function CrearClienteModal({ isOpen, onClose, onClienteCreado }: 
                                     Cancelar
                                 </Button>
                                 <Button
-                                    type="submit"
+                                    type="button"
+                                    onClick={handleSubmit}
                                     disabled={loading}
                                 >
                                     {loading ? 'Creando...' : 'Crear Cliente'}
                                 </Button>
                             </div>
-                        </form>
+                        </div>
                     </CardContent>
                 </Card>
             </div>

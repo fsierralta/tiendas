@@ -135,12 +135,8 @@ const mainNavItems: NavItem[] = [
                 title: 'Ventas',
                 href: '/ventas',
                 icon: DollarSign,
-            },
-            {
-                title: 'Nueva Venta',
-                href: '/ventas/create',
-                icon: DollarSign,
             }
+           
         ]
     },
 

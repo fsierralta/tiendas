@@ -87,6 +87,7 @@ export default function Create({ productos, formasPago, clientes, promotores, te
     const [formasPagoItems, setFormasPagoItems] = useState<FormaPagoItem[]>([
         { forma_pago_id: 0, monto: 0, referencia: '', notas: '', forma_pago: { id: 0, name: '', descripcion: '' } }
     ]);
+    const [clientesList, setClientesList] = useState<Cliente[]>(clientes);
     console.log(ventaItems);
     console.log(formasPagoItems)
     const { data, setData, post, processing, errors } = useForm({
@@ -301,9 +302,10 @@ export default function Create({ productos, formasPago, clientes, promotores, te
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     <ClienteSelector
-                                        clientes={clientes}
+                                        clientes={clientesList}
                                         selectedCliente={data.id_cliente}
                                         onClienteChange={(value) => setData('id_cliente', value)}
+                                        onClientesUpdate={setClientesList}
                                         error={errors.id_cliente}
                                     />
 
