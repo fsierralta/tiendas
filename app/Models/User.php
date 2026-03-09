@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'login_code',
+        'login_code_expires_at',
     ];
 
     /**
@@ -48,6 +50,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'login_code_expires_at' => 'datetime',
         ];
     }
 

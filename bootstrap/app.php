@@ -10,8 +10,6 @@ use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
 
-
-
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -35,7 +33,6 @@ return Application::configure(basePath: dirname(__DIR__))
            // HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-           
         ]);
 
         // Middleware para rutas de administración

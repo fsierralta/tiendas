@@ -4,16 +4,24 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Auth\LoginCodeController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 Route::get('/buscar-productos', [WelcomeController::class, 'buscarProductos'])->name('buscar.productos');
 
-Route::get('dashboard', function () {
-    return Inertia::render('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/verify-login-code', [LoginCodeController::class, 'show'])->name('verify-login-code');
+    Route::post('/verify-login-code', [LoginCodeController::class, 'verify']);
+});
 
-require __DIR__.'/settings.php';
+Route::middleware(['auth', 'verified', 'App\Http\Middleware\EnsureLoginCodeVerified'])->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
+
+    require __DIR__.'/settings.php';
+});
 
 require __DIR__.'/tiendaAdmin.php';
 
