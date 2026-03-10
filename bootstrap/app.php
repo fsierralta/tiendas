@@ -9,6 +9,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\EnsureLoginCodeVerified;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -26,14 +27,20 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'checkRole' => CheckRole::class,
             'check.permission' => CheckPermission::class,
+            'ensureLoginCodeVerified'=>EnsureLoginCodeVerified::class
+            
         ]);
+
 
 
         $middleware->web(append: [
            // HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+          
         ]);
+
+        
 
         // Middleware para rutas de administración
         

@@ -24,4 +24,23 @@ class VentaTecnico extends Model
         'pagado' => 'string',
     ];
 
+    public function pagos()
+    {
+        return $this->hasMany(Pago::class, 'venta_tecnico_id');
+    }
+
+    public function tecnico()
+    {
+        return $this->belongsTo(Tecnico::class, 'id_tecnico');
+    }
+
+    public function facturaVenta()
+    {
+        return $this->belongsTo(FacturaVenta::class, 'id_factura_venta');
+    }
+
+    public function locale()
+    {
+        return $this->belongsTo(Locale::class, 'id_locale');
+    }
 }

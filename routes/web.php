@@ -15,7 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/verify-login-code', [LoginCodeController::class, 'verify']);
 });
 
-Route::middleware(['auth', 'verified', 'App\Http\Middleware\EnsureLoginCodeVerified'])->group(function () {
+Route::middleware(['auth', 'verified', 'ensureLoginCodeVerified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
@@ -59,6 +59,9 @@ require __DIR__.'/clientesAdmin.php';
 
 require __DIR__.'/ventas.php';
 
+require __DIR__.'/jefe.php';
+
+
 //require __DIR__.'/ventasVendedor.php';
 
 // Rutas de clientes para el módulo de ventas (sin prefijo admin)
@@ -71,5 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/clientes', [App\Http\Controllers\ClienteController::class, 'store'])
         ->name('clientes.store.ventas');
 });
+
+
 
 

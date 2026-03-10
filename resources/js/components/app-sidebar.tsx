@@ -136,9 +136,21 @@ const mainNavItems: NavItem[] = [
                 href: '/ventas',
                 icon: DollarSign,
             }
-           
         ]
     },
+    {
+        title: 'jefe',
+        icon: Users,
+        items:[
+          
+            {
+                title: 'Pagos',
+                href: '/pagos',
+                icon: CreditCard,
+            }
+        ]
+    }
+
 
 ];
 
