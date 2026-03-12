@@ -125,6 +125,11 @@ const mainNavItems: NavItem[] = [
                 href: '/admin/users',
                 icon: Users,
             },
+             {
+                title: 'Pagos',
+                href: '/pagos',
+                icon: CreditCard,
+            }
         ],
     },
     {

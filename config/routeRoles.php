@@ -130,9 +130,9 @@ return [
             'api.ventas.productos'=>['admin','vendedor'],
             'api.ventas.validar-stock'=>['admin','vendedor'],
             'api.ventas.calcular-totales'=>['admin'],   
-            'pagos.index'=>['jefe'],
-            'pagos.create'=>['jefe'],
-            'pagos.store'=>['jefe'],
+            'pagos.index'=>['jefe','admin'],
+            'pagos.create'=>['jefe','admin'],
+            'pagos.store'=>['jefe','admin'],
            
            
 

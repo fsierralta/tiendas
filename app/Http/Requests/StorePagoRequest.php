@@ -11,7 +11,9 @@ class StorePagoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->hasRole('jefe') || $this->user()->hasRole('Jefe');
+      return true;
+    //
+      //   return $this->user()->hasRole('jefe') || $this->user()->hasRole('admin');
     }
 
     /**

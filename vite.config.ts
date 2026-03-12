@@ -30,4 +30,17 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
+    build: {
+        sourcemap: true,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['react', 'react-dom'],
+                },
+            },
+        },
+    },
+    server: {
+        sourcemap: true,
+    },
 });

@@ -88,8 +88,7 @@ export default function Create({ productos, formasPago, clientes, promotores, te
         { forma_pago_id: 0, monto: 0, referencia: '', notas: '', forma_pago: { id: 0, name: '', descripcion: '' } }
     ]);
     const [clientesList, setClientesList] = useState<Cliente[]>(clientes);
-    console.log(ventaItems);
-    console.log(formasPagoItems)
+   
     const { data, setData, post, processing, errors } = useForm({
         id_cliente: '',
         id_promotor: '',
